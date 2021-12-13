@@ -67,7 +67,7 @@ def add(flights):
 
 
 def saving(file_name, flights):
-    with open('json/'+file_name, "w", encoding="utf-8") as file_out:
+    with open('../json/'+file_name, "w", encoding="utf-8") as file_out:
         # Выполнить сериализацию данных в формат JSON.
         # Для поддержки кирилицы установим ensure_ascii=False
         print("Файл сохранён")
@@ -77,10 +77,10 @@ def saving(file_name, flights):
 def opening(file_name):
     """Загрузить всех работников из файла JSON."""
     # Открыть файл с заданным именем для чтения.
-    with open('json/'+file_name, "r", encoding="utf-8") as f_in:
+    with open('../json/'+file_name, "r", encoding="utf-8") as f_in:
         file = json.load(f_in)
         print("Файл загружен")
-        with open('json/check.json') as check:
+        with open('../json/check.json') as check:
             schema = json.load(check)
             validator = jsonschema.Draft7Validator(schema)
             try:
