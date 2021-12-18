@@ -69,16 +69,13 @@ def add(flights):
 
 
 def saving(file_name, flights):
-    with open('../json/'+file_name, "w", encoding="utf-8") as file_out:
-        # Выполнить сериализацию данных в формат JSON.
-        # Для поддержки кирилицы установим ensure_ascii=False
+    os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
+    with open(file_name, "w", encoding="utf-8") as file_out:
         print("Файл сохранён")
         json.dump(flights, file_out, ensure_ascii=False, indent=4)
 
 
 def opening(file_name, load):
-    """Загрузить всех работников из файла JSON."""
-    # Открыть файл с заданным именем для чтения.
     os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
     with open(file_name, "r", encoding="utf-8") as f_in:
         file = json.load(f_in)
@@ -99,7 +96,8 @@ def validate(file, schema):
 
 
 def main():
-    with open('../json/check.json', 'r') as check:
+    os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
+    with open('check.json', 'r') as check:
         first_load = json.load(check)
         check.close()
     flights = []
