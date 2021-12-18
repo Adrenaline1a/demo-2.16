@@ -79,10 +79,9 @@ def opening(file_name, load):
     os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
     with open(file_name, "r", encoding="utf-8") as f_in:
         file = json.load(f_in)
-        f_in.close()
-        print("Файл загружен")
-        validate(file, load)
-        return file
+    print("Файл загружен")
+    validate(file, load)
+    return file
 
 
 def validate(file, schema):
@@ -99,7 +98,6 @@ def main():
     os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
     with open('check.json', 'r') as check:
         first_load = json.load(check)
-        check.close()
     flights = []
     print('Список комманд: \n exit - Завершить работу'
           ' \n add - Добавить рейс \n'
