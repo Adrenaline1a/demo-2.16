@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
+import os
 import sys
 import json
 import jsonschema
@@ -74,25 +76,32 @@ def saving(file_name, flights):
         json.dump(flights, file_out, ensure_ascii=False, indent=4)
 
 
-def opening(file_name):
+def opening(file_name, load):
     """Загрузить всех работников из файла JSON."""
     # Открыть файл с заданным именем для чтения.
-    with open('../json/'+file_name, "r", encoding="utf-8") as f_in:
+    os.chdir("C:\\Users\\zligo\\git\\demo-2.16\\json")
+    with open(file_name, "r", encoding="utf-8") as f_in:
         file = json.load(f_in)
+        f_in.close()
         print("Файл загружен")
-        with open('../json/check.json') as check:
-            schema = json.load(check)
-            validator = jsonschema.Draft7Validator(schema)
-            try:
-                if not validator.validate(file):
-                    print("Нет ошибок валидации")
-            except jsonschema.exceptions.ValidationError:
-                print("Ошибка валидации", list(validator.iter_errors(file)))
-                exit()
+        validate(file, load)
         return file
 
 
+def validate(file, schema):
+    validator = jsonschema.Draft7Validator(schema)
+    try:
+        if not validator.validate(file):
+            print("Нет ошибок валидации")
+    except jsonschema.exceptions.ValidationError:
+        print("Ошибка валидации", file=sys.stderr)
+        exit(1)
+
+
 def main():
+    with open('../json/check.json', 'r') as check:
+        first_load = json.load(check)
+        check.close()
     flights = []
     print('Список комманд: \n exit - Завершить работу'
           ' \n add - Добавить рейс \n'
@@ -130,7 +139,7 @@ def main():
             # Получить имя файла.
             file_name = parts[1]
             # Сохранить данные в файл с заданным именем.
-            flights = opening(file_name)
+            flights = opening(file_name, first_load)
         else:
             print(f"Неизвестная команда {com}", file=sys.stderr)
 
